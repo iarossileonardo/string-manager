@@ -20,13 +20,52 @@ public class gestioneServizio extends Thread{
             BufferedReader in = new BufferedReader(new InputStreamReader(s0.getInputStream())); // stream dati in entrata
             DataOutputStream out = new DataOutputStream(s0.getOutputStream()); // stream dati inn uscita
             String stringaIn;
+            char op;
+            String dati;
             do{
-                stringaIn = in.readLine(); // attendo che arrivi una stringa sullo stream
-                System.out.println("Stringa ricevuta: " + stringaIn);
-        
-                String sMaiuscola = stringaIn.toUpperCase(); // trasformo la stringa in maiuscola
-                out.writeBytes(sMaiuscola + "\n"); // rispondo al client inviando la stringa
+                dati = in.readLine();
+                if (dati.equals("!")) {
+                    stringaIn = "!";
+                    break;
+                }
+                op = dati.charAt(dati.length() - 1);
+                stringaIn = dati.substring(0, dati.length() - 1); // attendo che arrivi una stringa sullo stream
+                System.out.println("Stringa ricevuta: " + stringaIn + " op: " + op);
+
+                String sMod;
+
+                switch (op) {
+                    case '1':
+                        sMod = stringaIn.toUpperCase(); // trasformo la stringa in maiuscola
+                        break;
+                    
+                    case '2':
+                        sMod = stringaIn.toLowerCase();
+                        break;
+
+                    case '3':
+                        StringBuilder sB = new StringBuilder(stringaIn);
+                        sMod = sB.reverse().toString();
+                        break;
+
+                    case '4':
+                        sMod = "Lunghezza stringa: " + stringaIn.length();
+                        break;
+                    
+                    case '!':
+                        sMod = "";
+                        stringaIn = "!";
+                        break;
+                
+                    default:
+                        sMod = "Inserire solo numeri da 1 a 4";
+                        break;
+                }
+
+                out.writeBytes(sMod + "\n"); // rispondo al client inviando la stringa
             }while(!stringaIn.equals("!")); // se il client manda "!", il server si chiude
+
+            System.out.println("ciao client");
         
             s0.close();    
         } catch (Exception e) {

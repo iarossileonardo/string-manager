@@ -17,20 +17,30 @@ public class Main {
         DataOutputStream out = new DataOutputStream(s0.getOutputStream()); //stream dati out
 
         Scanner input = new Scanner(System.in); //scanner input da tastiera
+        String op;
         String s;
 
         do {
-            System.out.println("Inserire la stringa da inviare (! per chiudere la connessione)\n");
-            s = input.nextLine(); //prendo la linea in input con lo scanner
+            System.out.println("Inserire l'operazione che si vuole fare \n1=>stringa in maiuscolo\n2=>stringa in minuscolo\n3=>inverti stringa\n4=>conta lungheza stringa\n!=>chiusura onnessione\n");
+            op = input.nextLine(); //prendo la linea in input con lo scanner
+
+            if (op.equals("!")) {
+                out.writeBytes("!");;
+                break;
+            }
+
+            System.out.println("Inserire stringa da inviare:\n");
+            s = input.nextLine();
+
             
-            out.writeBytes(s + "\n"); //invio i dati al server
+            out.writeBytes(s + op + "\n"); //invio i dati al server
             
             String sM = in.readLine(); //leggo i dati che arrivano dal server
             
             System.out.println("Invio dati a server");
             
-            System.out.println("Stringa maiuscola: " + sM);
-        } while (!s.equals("!")); //se scrivo "!" esco dal ciclo e si chiude il client
+            System.out.println("Risposta: " + sM);
+        } while (!op.equals("!")); //se scrivo "!" esco dal ciclo e si chiude il client
         
         input.close();
         s0.close();
