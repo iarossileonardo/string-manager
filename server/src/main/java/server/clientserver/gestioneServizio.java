@@ -24,10 +24,12 @@ public class gestioneServizio extends Thread{
             String dati;
             do{
                 dati = in.readLine();
+
                 if (dati.equals("!")) {
                     stringaIn = "!";
                     break;
                 }
+
                 op = dati.charAt(dati.length() - 1);
                 stringaIn = dati.substring(0, dati.length() - 1); // attendo che arrivi una stringa sullo stream
                 System.out.println("Stringa ricevuta: " + stringaIn + " op: " + op);
@@ -50,11 +52,6 @@ public class gestioneServizio extends Thread{
 
                     case '4':
                         sMod = "Lunghezza stringa: " + stringaIn.length();
-                        break;
-                    
-                    case '!':
-                        sMod = "";
-                        stringaIn = "!";
                         break;
                 
                     default:
